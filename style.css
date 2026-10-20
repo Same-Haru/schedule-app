@@ -202,3 +202,26 @@ button{
 
     opacity:0.8;
 }
+
+.mobile-day-nav{
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:12px;
+
+    margin:10px 20px;
+
+    font-weight:bold;
+}
+
+@media(max-width:768px){
+
+    .mobile-day-nav{
+
+        display:flex;
+    }
+}
+

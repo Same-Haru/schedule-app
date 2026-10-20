@@ -39,10 +39,6 @@
         スケジュール作成
     </button>
 
-    <button onclick="toggleEventForm()">
-        ＋予定追加
-    </button>
-
 </div>
 
 <div id="eventForm" class="event-form hidden">
@@ -81,7 +77,19 @@
     </button>
 
 </div>
+<div id="mobileDayNav" class="mobile-day-nav">
 
+    <button onclick="prevDay()">
+        ◀
+    </button>
+
+    <span id="mobileDayTitle"></span>
+
+    <button onclick="nextDay()">
+        ▶
+    </button>
+
+</div>
 <div id="scheduleContainer"></div>
 
 <script src="script.js"></script>

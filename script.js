@@ -1,3 +1,4 @@
+let mobileDayIndex = 0;
 let events =
     JSON.parse(
         localStorage.getItem("events")
@@ -210,8 +211,27 @@ function generateSchedule(){
 
     const baseDate =
         new Date(startDate);
+const isMobile =
+    window.innerWidth <= 768;
 
-    for(let d=0; d<days; d++){
+const startDay =
+    isMobile
+    ? mobileDayIndex
+    : 0;
+
+const endDay =
+    isMobile
+    ? Math.min(
+        mobileDayIndex + 1,
+        days
+      )
+    : days;
+    for(
+    let d=startDay;
+    d<endDay;
+    d++
+){
+
 
         const date =
             new Date(baseDate);
@@ -599,5 +619,28 @@ function generateTimeOptions(){
         list.appendChild(
             option
         );
+    }
+}
+
+function prevDay(){
+
+    if(mobileDayIndex > 0){
+
+        mobileDayIndex--;
+
+        generateSchedule();
+    }
+}
+
+function nextDay(){
+
+    if(
+        mobileDayIndex <
+        scheduleDates.length - 1
+    ){
+
+        mobileDayIndex++;
+
+        generateSchedule();
     }
 }
