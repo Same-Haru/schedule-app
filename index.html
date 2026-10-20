@@ -53,11 +53,17 @@
 
     <select id="eventDate"></select>
 
-    <input type="time"
-           id="eventStart">
+    <input
+    type="text"
+    id="eventStart"
+    list="timeOptions"
+    >
+    
 
-    <input type="time"
-           id="eventEnd">
+<input
+    type="text"
+    id="eventEnd"
+    list="timeOptions">
 
     <select id="eventColor">
         <option value="#F8C8DC">🩷 ピンク</option>
@@ -79,6 +85,61 @@
 <div id="scheduleContainer"></div>
 
 <script src="script.js"></script>
+
+<div id="editModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <h3>予定編集</h3>
+
+        <input
+            type="text"
+            id="editTitle">
+
+        <input
+            type="text"
+            id="editStart"
+            list="timeOptions">
+
+        <input
+            type="text"
+            id="editEnd"
+            list="timeOptions">
+
+        <select id="editColor">
+
+            <option value="#F8C8DC">🩷 ピンク</option>
+            <option value="#FFD6A5">🧡 オレンジ</option>
+            <option value="#FFF3B0">💛 イエロー</option>
+            <option value="#CDEAC0">💚 グリーン</option>
+            <option value="#B8F2E6">🩵 ミント</option>
+            <option value="#A9DEF9">💙 ブルー</option>
+            <option value="#D0BDF4">💜 ラベンダー</option>
+            <option value="#E5E5E5">🩶 グレー</option>
+
+        </select>
+
+        <div class="modal-buttons">
+
+            <button onclick="saveEdit()">
+                保存
+            </button>
+
+            <button onclick="deleteEvent()">
+                削除
+            </button>
+
+            <button onclick="closeModal()">
+                閉じる
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<datalist id="timeOptions"></datalist>
 
 </body>
 </html>

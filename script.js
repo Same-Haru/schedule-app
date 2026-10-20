@@ -1,5 +1,11 @@
-let events = [];
+let events =
+    JSON.parse(
+        localStorage.getItem("events")
+    ) || [];
+
 let scheduleDates = [];
+
+let editingEventId = null;
 
 const HOUR_HEIGHT = 60;
 
@@ -17,6 +23,21 @@ function convertToMinutes(time){
         time.split(":").map(Number);
 
     return h * 60 + m;
+}
+
+function formatTimeInput(input){
+
+    let value =
+        input.value
+             .replace(/\D/g,'');
+
+    if(value.length === 4){
+
+        input.value =
+            value.slice(0,2)
+            + ":"
+            + value.slice(2);
+    }
 }
 
 function formatDate(date){
@@ -78,14 +99,32 @@ function saveEvent(){
         return;
     }
 
-    events.push({
-        title,
-        date,
-        start,
-        end,
-        color
-    });
+   events.push({
 
+    id: Date.now(),
+
+    title,
+    date,
+    start,
+    end,
+    color
+
+});
+
+saveEvents();
+document.getElementById(
+    "eventStart"
+).value =
+document.getElementById(
+    "startTime"
+).value;
+
+document.getElementById(
+    "eventEnd"
+).value =
+document.getElementById(
+    "startTime"
+).value;
     generateSchedule();
 }
 
@@ -234,6 +273,14 @@ function generateSchedule(){
 
     updateDateSelect();
 
+generateTimeOptions();
+
+container.appendChild(
+    calendar
+);
+    
+    generateTimeOptions();
+
     container.appendChild(calendar);
 
     renderEvents(
@@ -244,6 +291,44 @@ function generateSchedule(){
 function renderEvents(startHour){
 
     events.forEach(event=>{
+
+        const overlappingEvents =
+    events.filter(e => {
+
+        if(e.id === event.id){
+            return false;
+        }
+
+        if(e.date !== event.date){
+            return false;
+        }
+
+        const eventStart =
+            convertToMinutes(
+                event.start
+            );
+
+        const eventEnd =
+            convertToMinutes(
+                event.end
+            );
+
+        const otherStart =
+            convertToMinutes(
+                e.start
+            );
+
+        const otherEnd =
+            convertToMinutes(
+                e.end
+            );
+
+        return (
+            eventStart < otherEnd &&
+            eventEnd > otherStart
+        );
+
+    });
 
         const body =
             document.querySelector(
@@ -283,9 +368,56 @@ function renderEvents(startHour){
 
         card.style.height =
             `${height}px`;
+        const overlapCount =
+    overlappingEvents.length + 1;
 
-        card.innerText =
-            event.title;
+if(overlapCount > 1){
+
+    const allOverlapEvents =
+        [event, ...overlappingEvents]
+        .sort((a,b)=>
+            a.id - b.id
+        );
+
+    const columnIndex =
+        allOverlapEvents.findIndex(
+            e => e.id === event.id
+        );
+
+    const width =
+        100 / overlapCount;
+
+    card.style.width =
+        `calc(${width}% - 8px)`;
+
+    card.style.left =
+        `${width * columnIndex}%`;
+
+}else{
+
+    card.style.width =
+        "calc(100% - 16px)";
+
+    card.style.left =
+        "8px";
+}
+
+card.innerHTML = `
+<div class="card-title">
+    ${event.title}
+</div>
+
+<div class="card-time">
+    ${event.start}〜${event.end}
+</div>
+`;
+            card.style.cursor = "pointer";
+
+card.onclick = () => {
+
+    openModal(event.id);
+
+};
 
         body.appendChild(card);
     });
@@ -307,3 +439,165 @@ window.onload = ()=>{
 
     generateSchedule();
 };
+function saveEvents(){
+
+    localStorage.setItem(
+        "events",
+        JSON.stringify(events)
+    );
+}
+function openModal(id){
+
+    const event =
+        events.find(
+            e => e.id === id
+        );
+
+    if(!event) return;
+
+    editingEventId = id;
+
+    document.getElementById(
+        "editTitle"
+    ).value = event.title;
+
+    document.getElementById(
+        "editStart"
+    ).value = event.start;
+
+    document.getElementById(
+        "editEnd"
+    ).value = event.end;
+
+    document.getElementById(
+        "editColor"
+    ).value = event.color;
+
+    document.getElementById(
+        "editModal"
+    ).classList.remove(
+        "hidden"
+    );
+}
+
+function closeModal(){
+
+    document.getElementById(
+        "editModal"
+    ).classList.add(
+        "hidden"
+    );
+}
+function saveEdit(){
+
+    const event =
+        events.find(
+            e => e.id === editingEventId
+        );
+
+    if(!event) return;
+
+    event.title =
+        document.getElementById(
+            "editTitle"
+        ).value;
+
+    event.start =
+        document.getElementById(
+            "editStart"
+        ).value;
+
+    event.end =
+        document.getElementById(
+            "editEnd"
+        ).value;
+
+    event.color =
+        document.getElementById(
+            "editColor"
+        ).value;
+
+    saveEvents();
+
+    closeModal();
+
+    generateSchedule();
+}
+function deleteEvent(){
+
+    if(
+        !confirm(
+            "削除しますか？"
+        )
+    ){
+        return;
+    }
+
+    events =
+        events.filter(
+            e =>
+            e.id !== editingEventId
+        );
+
+    saveEvents();
+
+    closeModal();
+
+    generateSchedule();
+}
+function generateTimeOptions(){
+
+    const list =
+        document.getElementById(
+            "timeOptions"
+        );
+
+    if(!list) return;
+
+    list.innerHTML = "";
+
+    const start =
+        document.getElementById(
+            "startTime"
+        ).value;
+
+    const end =
+        document.getElementById(
+            "endTime"
+        ).value;
+
+    const startMinutes =
+        convertToMinutes(start);
+
+    const endMinutes =
+        convertToMinutes(end);
+
+    for(
+        let m=startMinutes;
+        m<=endMinutes;
+        m+=15
+    ){
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        const h =
+            Math.floor(m/60);
+
+        const min =
+            m%60;
+
+        option.value =
+            String(h)
+                .padStart(2,"0")
+            + ":"
+            + String(min)
+                .padStart(2,"0");
+
+        list.appendChild(
+            option
+        );
+    }
+}
