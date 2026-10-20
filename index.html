@@ -1,1 +1,84 @@
-こんにちは！
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スケジュール管理ツール</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>📅 スケジュール管理ツール</h1>
+</header>
+
+<div class="settings">
+
+    <label>
+        開始日
+        <input type="date" id="startDate">
+    </label>
+
+    <label>
+        日数
+        <input type="number" id="days" value="2" min="1" max="7">
+    </label>
+
+    <label>
+        開始時間
+        <input type="time" id="startTime" value="09:00">
+    </label>
+
+    <label>
+        終了時間
+        <input type="time" id="endTime" value="21:00">
+    </label>
+
+    <button onclick="generateSchedule()">
+        スケジュール作成
+    </button>
+
+    <button onclick="toggleEventForm()">
+        ＋予定追加
+    </button>
+
+</div>
+
+<div id="eventForm" class="event-form hidden">
+
+    <input type="text"
+           id="eventTitle"
+           placeholder="予定名">
+
+    <select id="eventDate"></select>
+
+    <input type="time"
+           id="eventStart">
+
+    <input type="time"
+           id="eventEnd">
+
+    <select id="eventColor">
+        <option value="#F8C8DC">🩷 ピンク</option>
+        <option value="#FFD6A5">🧡 オレンジ</option>
+        <option value="#FFF3B0">💛 イエロー</option>
+        <option value="#CDEAC0">💚 グリーン</option>
+        <option value="#B8F2E6">🩵 ミント</option>
+        <option value="#A9DEF9">🩵 ブルー</option>
+        <option value="#D0BDF4">💜 ラベンダー</option>
+        <option value="#E5E5E5">🩶 グレー</option>
+    </select>
+
+    <button onclick="saveEvent()">
+        登録
+    </button>
+
+</div>
+
+<div id="scheduleContainer"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
