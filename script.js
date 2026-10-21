@@ -405,17 +405,6 @@ const endDay =
         dayColumn.className =
             "day-column";
 
-        const header =
-            document.createElement("div");
-
-        header.className =
-            "day-header";
-
-        header.textContent =
-            formatDate(date);
-
-        dayColumn.appendChild(header);
-
         const body =
             document.createElement("div");
 
