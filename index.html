@@ -13,12 +13,23 @@
 
     <h1>📅 スケジュール管理</h1>
 
-    <button
-      onclick="toggleEventForm()">
+    <div class="header-buttons">
 
-      ＋
+         <button
+            class="menu-button"
+            onclick="showSetupPanel()">
+            ⚙️
+        </button>
 
-    </button>
+        <button
+            class="menu-button"
+            onclick="toggleEventForm()">
+            ＋
+        </button>
+
+
+
+    </div>
 
 </header>
 
@@ -87,19 +98,22 @@
     </button>
 
 </div>
+
 <div id="mobileDayNav" class="mobile-day-nav">
 
     <button onclick="prevDay()">
         ◀
     </button>
 
-    <span id="mobileDayTitle"></span>
+    <span id="mobileDayTitle">
+    </span>
 
     <button onclick="nextDay()">
         ▶
     </button>
 
 </div>
+
 <div id="scheduleContainer"></div>
 
 <script src="script.js"></script>
