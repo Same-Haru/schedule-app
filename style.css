@@ -290,3 +290,26 @@ button{
 
     font-weight:bold;
 }
+
+.time-select-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+}
+
+.time-label{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    margin-top:8px;
+}
+
+.time-block{
+
+    width:100%;
+}

@@ -55,7 +55,7 @@
         <input type="time" id="endTime" value="21:00">
     </label>
 
-    <button onclick="generateSchedule()">
+    <button onclick="createNewSchedule()">
         スケジュール作成
     </button>
 
@@ -70,11 +70,45 @@
 
     <select id="eventDate"></select>
 
-    <input
-    type="text"
-    id="eventStart"
-    list="timeOptions"
-    >
+    <div class="time-label">
+        開始時間
+    </div>
+
+  <div class="time-block">
+
+    <div class="time-label">
+        開始時間
+    </div>
+
+    <div class="time-select-row">
+
+        <select id="eventStartHour"></select>
+
+        <span>：</span>
+
+        <select id="eventStartMinute"></select>
+
+    </div>
+
+</div>
+
+<div class="time-block">
+
+    <div class="time-label">
+        終了時間
+    </div>
+
+    <div class="time-select-row">
+
+        <select id="eventEndHour"></select>
+
+        <span>：</span>
+
+        <select id="eventEndMinute"></select>
+
+    </div>
+
+</div>
     
 
 <input
@@ -127,16 +161,45 @@
         <input
             type="text"
             id="editTitle">
+    <div class="time-label">
+        開始時間
+    </div>
 
-        <input
-            type="text"
-            id="editStart"
-            list="timeOptions">
+    <div class="time-block">
 
-        <input
-            type="text"
-            id="editEnd"
-            list="timeOptions">
+    <div class="time-label">
+        開始時間
+    </div>
+
+    <div class="time-select-row">
+
+        <select id="editStartHour"></select>
+
+        <span>：</span>
+
+        <select id="editStartMinute"></select>
+
+    </div>
+
+</div>
+
+<div class="time-block">
+
+    <div class="time-label">
+        終了時間
+    </div>
+
+    <div class="time-select-row">
+
+        <select id="editEndHour"></select>
+
+        <span>：</span>
+
+        <select id="editEndMinute"></select>
+
+    </div>
+
+</div>
 
         <select id="editColor">
 

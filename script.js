@@ -26,6 +26,87 @@ function convertToMinutes(time){
     return h * 60 + m;
 }
 
+function populateTimeSelects(){
+
+    const hourSelects = [
+
+        "eventStartHour",
+        "eventEndHour",
+        "editStartHour",
+        "editEndHour"
+
+    ];
+
+    const minuteSelects = [
+
+        "eventStartMinute",
+        "eventEndMinute",
+        "editStartMinute",
+        "editEndMinute"
+
+    ];
+
+    hourSelects.forEach(id=>{
+
+        const select =
+            document.getElementById(id);
+
+        if(!select) return;
+
+        select.innerHTML = "";
+
+        for(
+            let h=0;
+            h<24;
+            h++
+        ){
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                String(h)
+                    .padStart(2,"0");
+
+            option.textContent =
+                option.value;
+
+            select.appendChild(option);
+        }
+
+    });
+
+    minuteSelects.forEach(id=>{
+
+        const select =
+            document.getElementById(id);
+
+        if(!select) return;
+
+        select.innerHTML = "";
+
+        ["00","15","30","45"]
+            .forEach(min=>{
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    min;
+
+                option.textContent =
+                    min;
+
+                select.appendChild(option);
+
+            });
+    });
+}
+
 function formatTimeInput(input){
 
     let value =
@@ -40,6 +121,8 @@ function formatTimeInput(input){
             + value.slice(2);
     }
 }
+
+
 
 function formatDate(date){
 
@@ -80,14 +163,32 @@ function saveEvent(){
         ).value;
 
     const start =
+
         document.getElementById(
-            "eventStart"
-        ).value;
+            "eventStartHour"
+        ).value
+
+        + ":"
+
+        +
+
+        document.getElementById(
+            "eventStartMinute"
+        ).value;    
 
     const end =
+
         document.getElementById(
-            "eventEnd"
-        ).value;
+            "eventEndHour"
+        ).value
+
+        + ":"
+
+        +
+
+        document.getElementById(
+            "eventEndMinute"
+        ).value;    
 
     const color =
         document.getElementById(
@@ -114,8 +215,21 @@ function saveEvent(){
 
 saveEvents();
 document.getElementById(
-    "eventStart"
-).value =
+    "eventStartHour"
+).value = "09";
+
+document.getElementById(
+    "eventStartMinute"
+).value = "00";
+
+document.getElementById(
+    "eventEndHour"
+).value = "09";
+
+document.getElementById(
+    "eventEndMinute"
+).value = "00";
+
 document.getElementById(
     "startTime"
 ).value;
@@ -560,6 +674,7 @@ card.onclick = () => {
             .split("T")[0];
 
     }
+    populateTimeSelects();
 
     generateSchedule();
     
@@ -586,13 +701,31 @@ function openModal(id){
         "editTitle"
     ).value = event.title;
 
-    document.getElementById(
-        "editStart"
-    ).value = event.start;
+const [startHour,startMinute] =
+    event.start.split(":");
 
-    document.getElementById(
-        "editEnd"
-    ).value = event.end;
+document.getElementById(
+    "editStartHour"
+).value =
+    startHour;
+
+document.getElementById(
+    "editStartMinute"
+).value =
+    startMinute;
+
+const [endHour,endMinute] =
+    event.end.split(":");
+
+document.getElementById(
+    "editEndHour"
+).value =
+    endHour;
+
+document.getElementById(
+    "editEndMinute"
+).value =
+    endMinute;
 
     document.getElementById(
         "editColor"
@@ -627,16 +760,33 @@ function saveEdit(){
             "editTitle"
         ).value;
 
-    event.start =
-        document.getElementById(
-            "editStart"
-        ).value;
+        event.start =
 
-    event.end =
-        document.getElementById(
-            "editEnd"
-        ).value;
+    document.getElementById(
+        "editStartHour"
+    ).value
 
+    + ":"
+
+    +
+
+    document.getElementById(
+        "editStartMinute"
+    ).value;
+
+event.end =
+
+    document.getElementById(
+        "editEndHour"
+    ).value
+
+    + ":"
+
+    +
+
+    document.getElementById(
+        "editEndMinute"
+    ).value;
     event.color =
         document.getElementById(
             "editColor"
@@ -757,6 +907,16 @@ if(
         generateSchedule();
     }
 }
+
+function createNewSchedule(){
+
+    mobileDayIndex = 0;
+
+    generateSchedule();
+
+}
+
+
 function saveScheduleSettings(){
 
     const settings = {
@@ -809,4 +969,3 @@ function showSetupPanel(){
             "none";
     }
 }
-
