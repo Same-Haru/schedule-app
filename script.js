@@ -181,7 +181,26 @@ function generateSchedule(){
     container.innerHTML = "";
 
     scheduleDates = [];
+    const allDates = [];
 
+    for(
+        let d = 0;
+        d < days;
+        d++
+    ){
+
+    const date =
+        new Date(startDate);
+
+    date.setDate(
+        date.getDate() + d
+    );
+
+    allDates.push(
+        date.toISOString()
+            .split("T")[0]
+    );
+}
     const calendar =
         document.createElement("div");
 
@@ -322,9 +341,9 @@ if(
 
     const currentDate =
     new Date(
-        scheduleDates[
-            mobileDayIndex
-        ]
+    allDates[
+        mobileDayIndex
+    ]
     );
 
 title.textContent =
@@ -720,10 +739,18 @@ function prevDay(){
 
 function nextDay(){
 
-    if(
-        mobileDayIndex <
-        scheduleDates.length - 1
-    ){
+const days =
+    parseInt(
+        document.getElementById(
+            "days"
+        ).value
+    );
+
+if(
+    mobileDayIndex <
+    days - 1
+)
+{
 
         mobileDayIndex++;
 
