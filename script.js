@@ -127,6 +127,15 @@ document.getElementById(
     "startTime"
 ).value;
     generateSchedule();
+
+    document
+    .getElementById(
+        "eventForm"
+    )
+    .classList.add(
+        "hidden"
+    );
+
 }
 
 function generateSchedule(){
@@ -309,6 +318,13 @@ container.appendChild(
     generateTimeOptions();
 
     container.appendChild(calendar);
+
+    document
+    .getElementById(
+        "setupPanel"
+    )
+    .style.display =
+    "none";
 
     renderEvents(
         startHour

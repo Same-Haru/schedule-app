@@ -139,17 +139,19 @@ button{
 @media(max-width:768px){
 
     .calendar{
-        flex-direction:column;
+        flex-direction:row;
     }
 
     .time-column{
         width:55px;
-
+        flex-shrink:0;
     }
 
     .day-column{
-        min-width:100%;
+        min-width:0;
+        flex:1;
     }
+
 }
 .modal{
 
@@ -206,7 +208,7 @@ button{
 
 .mobile-day-nav{
 
-    display:none;
+     display:flex;
 
     justify-content:center;
     align-items:center;
