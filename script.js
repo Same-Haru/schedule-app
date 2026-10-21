@@ -470,9 +470,18 @@ const day =
         currentDate.getDate()
     ).padStart(2,"0");
 
-title.textContent =
-    `${month}/${day}`;
+const week = [
+    "日","月","火","水",
+    "木","金","土"
+];
 
+const weekDay =
+    week[
+        currentDate.getDay()
+    ];
+
+title.textContent =
+    `${month}/${day}(${weekDay})`;
 }
     updateDateSelect();
 
