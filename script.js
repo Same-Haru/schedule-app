@@ -140,6 +140,8 @@ document.getElementById(
 
 function generateSchedule(){
 
+    saveScheduleSettings();
+
     const startDate =
         document.getElementById(
             "startDate"
@@ -319,12 +321,16 @@ container.appendChild(
 
     container.appendChild(calendar);
 
-    document
-    .getElementById(
+    const setupPanel =
+    document.getElementById(
         "setupPanel"
-    )
-    .style.display =
-    "none";
+    );
+
+if(setupPanel){
+
+    setupPanel.style.display =
+        "none";
+}
 
     renderEvents(
         startHour
@@ -466,21 +472,56 @@ card.onclick = () => {
     });
 }
 
-window.onload = ()=>{
+ window.onload = ()=>{
 
-    const today =
-        new Date();
+    const savedSettings =
 
-    document
-      .getElementById(
-        "startDate"
-      )
-      .value =
-      today
-        .toISOString()
-        .split("T")[0];
+        JSON.parse(
+            localStorage.getItem(
+                "scheduleSettings"
+            )
+        );
+
+    if(savedSettings){
+
+        document.getElementById(
+            "startDate"
+        ).value =
+        savedSettings.startDate;
+
+        document.getElementById(
+            "days"
+        ).value =
+        savedSettings.days;
+
+        document.getElementById(
+            "startTime"
+        ).value =
+        savedSettings.startTime;
+
+        document.getElementById(
+            "endTime"
+        ).value =
+        savedSettings.endTime;
+
+    }else{
+
+        const today =
+            new Date();
+
+        document
+            .getElementById(
+                "startDate"
+            )
+            .value =
+            today
+            .toISOString()
+            .split("T")[0];
+
+    }
 
     generateSchedule();
+    
 };
 function saveEvents(){
 
@@ -666,4 +707,35 @@ function nextDay(){
 
         generateSchedule();
     }
+}
+function saveScheduleSettings(){
+
+    const settings = {
+
+        startDate:
+            document.getElementById(
+                "startDate"
+            ).value,
+
+        days:
+            document.getElementById(
+                "days"
+            ).value,
+
+        startTime:
+            document.getElementById(
+                "startTime"
+            ).value,
+
+        endTime:
+            document.getElementById(
+                "endTime"
+            ).value
+
+    };
+
+    localStorage.setItem(
+        "scheduleSettings",
+        JSON.stringify(settings)
+    );
 }
