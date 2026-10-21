@@ -126,15 +126,15 @@ document.getElementById(
 document.getElementById(
     "startTime"
 ).value;
-    generateSchedule();
-
-    document
+document
     .getElementById(
         "eventForm"
     )
     .classList.add(
         "hidden"
     );
+
+generateSchedule();
 
 }
 
@@ -155,11 +155,11 @@ function generateSchedule(){
         );
         if(
     mobileDayIndex >= days
-){
+        ){
 
     mobileDayIndex = 0;
 
-}
+    }
 
     const startTime =
         document.getElementById(
@@ -226,6 +226,28 @@ function generateSchedule(){
     }
 
     calendar.appendChild(timeColumn);
+
+    const title =
+    document.getElementById(
+        "mobileDayTitle"
+    );
+
+if(
+    window.innerWidth <= 768 &&
+    scheduleDates.length > 0
+){
+
+    const currentDate =
+    new Date(
+        scheduleDates[
+            mobileDayIndex
+        ]
+    );
+
+title.textContent =
+    `${currentDate.getMonth()+1}/${currentDate.getDate()}`;
+
+}
 
     const baseDate =
         new Date(startDate);
@@ -739,3 +761,17 @@ function saveScheduleSettings(){
         JSON.stringify(settings)
     );
 }
+function showSetupPanel(){
+
+    const panel =
+        document.getElementById(
+            "setupPanel"
+        );
+
+    if(panel){
+
+        panel.style.display =
+            "flex";
+    }
+}
+

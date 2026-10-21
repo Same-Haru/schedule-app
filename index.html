@@ -10,10 +10,19 @@
 <body>
 
 <header>
+
     <h1>📅 スケジュール管理</h1>
+
+    <button
+      onclick="toggleEventForm()">
+
+      ＋
+
+    </button>
+
 </header>
 
-<div class="settings">
+<div id="setupPanel" class="settings">
 
     <label>
         開始日
@@ -41,7 +50,8 @@
 
 </div>
 
-<div id="eventForm" class="event-form hidden">
+<div id="eventForm"
+         class="event-form hidden">
 
     <input type="text"
            id="eventTitle"
