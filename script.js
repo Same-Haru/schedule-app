@@ -227,27 +227,7 @@ function generateSchedule(){
 
     calendar.appendChild(timeColumn);
 
-    const title =
-    document.getElementById(
-        "mobileDayTitle"
-    );
 
-if(
-    window.innerWidth <= 768 &&
-    scheduleDates.length > 0
-){
-
-    const currentDate =
-    new Date(
-        scheduleDates[
-            mobileDayIndex
-        ]
-    );
-
-title.textContent =
-    `${currentDate.getMonth()+1}/${currentDate.getDate()}`;
-
-}
 
     const baseDate =
         new Date(startDate);
@@ -330,7 +310,27 @@ const endDay =
 
         calendar.appendChild(dayColumn);
     }
+    const title =
+    document.getElementById(
+        "mobileDayTitle"
+    );
 
+if(
+    window.innerWidth <= 768 &&
+    scheduleDates.length > 0
+){
+
+    const currentDate =
+    new Date(
+        scheduleDates[
+            mobileDayIndex
+        ]
+    );
+
+title.textContent =
+    `${currentDate.getMonth()+1}/${currentDate.getDate()}`;
+
+}
     updateDateSelect();
 
 generateTimeOptions();
@@ -768,10 +768,18 @@ function showSetupPanel(){
             "setupPanel"
         );
 
-    if(panel){
+    if(
+        panel.style.display ===
+        "none"
+    ){
 
         panel.style.display =
             "flex";
+
+    }else{
+
+        panel.style.display =
+            "none";
     }
 }
 
