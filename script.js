@@ -364,36 +364,36 @@ function generateSchedule(){
 
     const baseDate =
         new Date(startDate);
-const isMobile =
-    window.innerWidth <= 768;
+    const isMobile =
+        window.innerWidth <= 768;
 
-const startDay =
-    isMobile
-    ? mobileDayIndex
-    : 0;
+    const startDay =
+        isMobile
+        ? mobileDayIndex
+        : 0;
 
-const endDay =
-    isMobile
-    ? Math.min(
-        mobileDayIndex + 1,
-        days
-      )
-    : days;
-    for(
-    let d=startDay;
-    d<endDay;
-    d++
-){
+    const endDay =
+        isMobile
+        ? Math.min(
+            mobileDayIndex + 1,
+            days
+        )
+        : days;
+        for(
+        let d=startDay;
+        d<endDay;
+        d++
+    ){
 
 
-        const date =
+    const date =
             new Date(baseDate);
 
         date.setDate(
             baseDate.getDate()+d
         );
 
-        const iso =
+    const iso =
           date.toISOString()
               .split("T")[0];
 
@@ -404,6 +404,23 @@ const endDay =
 
         dayColumn.className =
             "day-column";
+
+        const header =
+            document.createElement("div");
+
+        header.className = "day-header";
+
+        header.textContent =
+            formatDate(date);
+
+          if(
+        !isMobile ||
+        mobileDayIndex === 0
+        ){
+    dayColumn.appendChild(
+        header
+    );
+}
 
         const body =
             document.createElement("div");

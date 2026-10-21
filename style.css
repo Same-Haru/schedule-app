@@ -124,6 +124,19 @@ button{
     font-weight:bold;
     line-height:40px;
     background:#f0f3ff;
+    @media(max-width:768px){
+
+    .day-header{
+
+        display:none;
+    }
+
+    .time-column > div:first-child{
+
+        display:none;
+    }
+
+}
 }
 
 .day-body{
@@ -186,7 +199,21 @@ button{
         flex:1;
     }
 
+    .hidden-on-mobile{
+
+        display:none;
+    }
+ 
+    .day-header{
+        height:0;
+        padding:0;
+        margin:0;
+        border:none;
+        overflow:hidden;
+    }
+
 }
+
 .modal{
 
     position:fixed;
@@ -312,4 +339,19 @@ button{
 .time-block{
 
     width:100%;
+}
+
+
+@media (max-width:768px){
+
+    .day-header{
+
+        display:none;
+    }
+
+    .time-column > div:first-child{
+
+        display:none;
+    }
+
 }
