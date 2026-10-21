@@ -142,6 +142,13 @@ function generateSchedule(){
                 "days"
             ).value
         );
+        if(
+    mobileDayIndex >= days
+){
+
+    mobileDayIndex = 0;
+
+}
 
     const startTime =
         document.getElementById(
